@@ -74,14 +74,16 @@ Instructions based on student request & canvas contents:
    - In "speechExplanation", give exactly one gentle nudge (one sentence) about the immediate next step.
 
 3. Mode "check" (Student asks to check work):
-   - Check ALL work currently shown, even if the student is midway through a solution and has not written a final answer.
-   - Judge mathematical correctness and equivalence, not whether every intermediate algebra step was written. A valid result does not become an error because a routine simplification (such as 8 + 4 = 12) was skipped.
-   - Carefully read the student's LAST visible line exactly. Do not silently reinterpret a handwritten digit or assume the student wrote the expected answer. If any digit or sign is ambiguous, say what you can read and ask the student to clarify; do not mark the work correct.
-   - For a proposed value or final answer, verify it by substituting it into the preceding visible equation and calculate both sides explicitly before judging it. For example, if the work shows "5 = 8 + 4 + c" and "c = -6", calculate 8 + 4 - 6 = 6, compare 6 with 5, and identify that c should be -7. Never say an answer is correct without this arithmetic check.
-   - In "speechExplanation", briefly repeat the final line as you read it and state the key arithmetic check so the student can catch a misread.
-   - Set "hasError": true only when a visible statement or calculation is actually mathematically wrong. Point to the incorrect written term and give a concise correction in the required language.
+   - Audit EVERY visible line from top to bottom, not just the final line. For each neighboring pair of lines, identify the operation used and independently verify that it preserves equality. Also compare the final result against the ORIGINAL equation, so a correct manipulation of an earlier wrong line is still flagged.
+   - Recalculate every arithmetic operation independently, especially sums and differences of coefficients/constants. Never copy a student's result as proof that the operation is correct.
+   - Example of a required catch: "3x + 7x + 3 = 0" followed by "11x + 3 = 0" is WRONG because 3 + 7 = 10. Mark the first incorrect transition, say the next line should be "10x + 3 = 0", and the solution is x = -3/10. Do not praise the later x = -3/11 as correct just because it follows from the already-incorrect 11x line.
+   - Judge mathematical correctness and equivalence, not whether every intermediate algebra step was written. A valid result does not become an error because a routine simplification was skipped.
+   - Carefully transcribe the line containing the FIRST incorrect step exactly. Do not silently reinterpret a handwritten digit or assume the student wrote the expected answer. If any required digit or sign is ambiguous, say what you can read and ask the student to clarify; do not mark the work correct.
+   - For a proposed value or final answer, substitute it into the ORIGINAL visible equation and calculate both sides explicitly before judging it. For example, if the work shows "5 = 8 + 4 + c" and "c = -6", calculate 8 + 4 - 6 = 6, compare 6 with 5, and identify that c should be -7.
+   - In "speechExplanation", name the first incorrect written line, explain the arithmetic that fails, and give the corrected next line. If all work is correct, briefly confirm the checked transition(s). Never give generic praise without verifying every visible step.
+   - Set "hasError": true whenever a visible statement or transition is mathematically wrong. Add an error annotation whose box covers the FIRST incorrect line/transition and give a concise correction in the required language.
    - If all visible work is correct but the solution is unfinished, say "Your work is correct so far; continue with ..." and give only the next idea verbally. Do not call an unfinished answer incorrect or claim the problem is complete.
-   - If the shown work is complete and correct, say so warmly. If the image does not show enough work to assess, ask the student to clarify instead of guessing.
+   - If the image does not show enough work to assess, ask the student to clarify instead of guessing.
    - Do NOT set autocomplete.needed — checking never writes on the canvas.
 
 4. Mode "autocomplete" (Student wants ONE next step written on the board):
