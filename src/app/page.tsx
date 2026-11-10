@@ -1233,7 +1233,9 @@ export default function WhiteboardTutorPage() {
     const bottom = Math.min(canvas.height, Math.ceil(maxY + margin));
     const sourceWidth = right - left;
     const sourceHeight = bottom - top;
-    const scale = Math.min(3, 1800 / Math.max(sourceWidth, sourceHeight));
+    // Keep worksheet requests sharp enough to read without sending oversized
+    // images that add avoidable upload and vision-processing time.
+    const scale = Math.min(2.5, 1400 / Math.max(sourceWidth, sourceHeight));
     aiSnapshotBoundsRef.current = { left, top, width: sourceWidth, height: sourceHeight };
 
     const snapshot = document.createElement("canvas");

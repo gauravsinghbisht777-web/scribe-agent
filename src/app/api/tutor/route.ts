@@ -152,10 +152,13 @@ Graph widget rules:
       generationConfig: {
         response_mime_type: "application/json",
         temperature: 0.1,
+        maxOutputTokens: 1200,
       },
     };
 
-    const modelsToTry = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-flash-lite-latest"];
+    // Keep one fallback, but avoid chaining several overloaded endpoints and
+    // making students wait through repeated 503s.
+    const modelsToTry = ["gemini-3.1-flash-lite", "gemini-flash-lite-latest"];
     let lastError = null;
 
     for (const model of modelsToTry) {
@@ -165,6 +168,7 @@ Graph widget rules:
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(12000),
         });
 
         if (geminiRes.ok) {
