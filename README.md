@@ -2,6 +2,8 @@
 
 Σcribe is a browser-based math and STEM whiteboard. Write or upload a problem, then ask the AI tutor to check your work, offer a hint, or show the next step. It also supports voice questions, spoken explanations, and multiple saved notebooks.
 
+**Live app:** [Open Σcribe on Vercel](https://scribe-agent-pied.vercel.app)
+
 ## Features
 
 - Large, scrollable writing canvas with pen, eraser, undo, and redo.
