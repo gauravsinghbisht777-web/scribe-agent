@@ -1407,6 +1407,7 @@ export default function WhiteboardTutorPage() {
 
     const minX = Number.isFinite(xMin) ? xMin! : -5;
     const maxX = Number.isFinite(xMax) && xMax! > minX ? xMax! : 5;
+    const plotColor = isDark ? "#fbbf24" : "#7c3aed";
     const samples = 240;
     const values = Array.from({ length: samples + 1 }, (_, i) => {
       const x = minX + ((maxX - minX) * i) / samples;
@@ -1438,7 +1439,7 @@ export default function WhiteboardTutorPage() {
 
     ctx.save();
     ctx.font = "bold 25px 'Caveat', 'Kalam', cursive, sans-serif";
-    ctx.fillStyle = drawingColor;
+    ctx.fillStyle = plotColor;
     ctx.textBaseline = "middle";
     ctx.fillText(title || `y = ${expression}`, plotX + 8, plotY + 20);
     ctx.font = "14px 'Kalam', sans-serif";
@@ -1468,7 +1469,7 @@ export default function WhiteboardTutorPage() {
       ctx.beginPath(); ctx.moveTo(mapX(0), top); ctx.lineTo(mapX(0), bottom); ctx.stroke();
     }
 
-    ctx.strokeStyle = isDark ? "#38bdf8" : "#2563eb";
+    ctx.strokeStyle = plotColor;
     ctx.lineWidth = 3.5;
     ctx.lineJoin = "round";
     ctx.beginPath();
@@ -2762,11 +2763,11 @@ function InteractiveGraphPlot({ expression }: { expression: string }) {
           ctx.moveTo(q.pts[0].sx, q.pts[0].sy);
           q.pts.slice(1).forEach((pt) => ctx.lineTo(pt.sx, pt.sy));
           ctx.closePath();
-          // height-based blue shading
+          // Height-based violet shading stands apart from the RGB axes.
           const alpha = 0.25 + 0.45 * q.h;
-          ctx.fillStyle = `rgba(37, 99, 235, ${alpha.toFixed(2)})`;
+          ctx.fillStyle = `rgba(124, 58, 237, ${alpha.toFixed(2)})`;
           ctx.fill();
-          ctx.strokeStyle = "rgba(30, 58, 138, 0.55)";
+          ctx.strokeStyle = "rgba(76, 29, 149, 0.55)";
           ctx.lineWidth = 0.6;
           ctx.stroke();
         });
@@ -2781,7 +2782,7 @@ function InteractiveGraphPlot({ expression }: { expression: string }) {
         }
 
         // curtain drop lines
-        ctx.strokeStyle = "rgba(37, 99, 235, 0.28)";
+        ctx.strokeStyle = "rgba(124, 58, 237, 0.28)";
         ctx.lineWidth = 1;
         for (let i = 0; i <= 120; i += 3) {
           ctx.beginPath();
@@ -2798,7 +2799,7 @@ function InteractiveGraphPlot({ expression }: { expression: string }) {
         ctx.stroke();
 
         // main glowing 3D curve
-        ctx.strokeStyle = "#2563eb";
+        ctx.strokeStyle = "#7c3aed";
         ctx.lineWidth = 3;
         ctx.beginPath();
         samples.forEach((pt, i) => (i === 0 ? ctx.moveTo(pt.sx, pt.sy) : ctx.lineTo(pt.sx, pt.sy)));
