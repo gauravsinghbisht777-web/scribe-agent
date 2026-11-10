@@ -2012,7 +2012,7 @@ export default function WhiteboardTutorPage() {
           </button>
           {/* 1. CHECK ANSWER BUTTON (verify student's solved equation) */}
           <button
-            onClick={() => runTutorAnalysis("Audit every visible line and each transition from top to bottom, including arithmetic on coefficients. Find the FIRST incorrect line, explain the exact correction, and verify the result against the original equation. If any earlier step is wrong, do not call later work correct. This may be intermediate work, not a finished solution. Do not write anything on the board.", "check")}
+            onClick={() => runTutorAnalysis("Audit every visible line and each transition from top to bottom, including arithmetic on coefficients. Find the FIRST incorrect line, explain the exact correction, and return a tight bounding box for that line so it can be underlined on the board. If any earlier step is wrong, do not call later work correct. This may be intermediate work, not a finished solution. Do not write anything on the board.", "check")}
             disabled={isAnalyzing}
             className="flex items-center gap-1.5 px-2.5 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-[10px] md:text-xs font-semibold shadow-sm transition disabled:opacity-50"
             title="Check whether your current work is correct so far, even if unfinished"
