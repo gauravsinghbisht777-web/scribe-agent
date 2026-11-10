@@ -184,9 +184,15 @@ Graph widget rules:
       }
     }
 
+    const providerError = String(lastError || "");
+    const isBusy = /503|UNAVAILABLE|high demand|overloaded/i.test(providerError);
     return NextResponse.json(
-      { error: `Gemini API failed: ${lastError}` },
-      { status: 500 }
+      {
+        error: isBusy
+          ? "The AI tutor is temporarily busy. Please wait a few seconds and try again."
+          : "The AI tutor could not process that request. Please try again shortly.",
+      },
+      { status: isBusy ? 503 : 502 }
     );
   } catch (error: any) {
     console.error("Tutor Route Exception:", error);
