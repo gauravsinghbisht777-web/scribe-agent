@@ -1438,13 +1438,21 @@ export default function WhiteboardTutorPage() {
     const mapY = (y: number) => bottom - ((y - minY) / (maxY - minY)) * (bottom - top);
 
     ctx.save();
+    // Give the graph its own paper surface so the notebook grid cannot show
+    // through and visually merge with the graph's internal grid.
+    ctx.fillStyle = isDark ? "#0f172a" : "#ffffff";
+    ctx.fillRect(plotX, plotY, plotWidth, plotHeight);
+    ctx.strokeStyle = isDark ? "#475569" : "#c4b5fd";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(plotX, plotY, plotWidth, plotHeight);
+
     ctx.font = "bold 25px 'Caveat', 'Kalam', cursive, sans-serif";
     ctx.fillStyle = plotColor;
     ctx.textBaseline = "middle";
     ctx.fillText(title || `y = ${expression}`, plotX + 8, plotY + 20);
     ctx.font = "14px 'Kalam', sans-serif";
     ctx.lineWidth = 1;
-    ctx.strokeStyle = isDark ? "rgba(203,213,225,0.35)" : "rgba(71,85,105,0.28)";
+    ctx.strokeStyle = isDark ? "rgba(251,191,36,0.28)" : "rgba(124,58,237,0.24)";
     ctx.fillStyle = isDark ? "#cbd5e1" : "#475569";
 
     for (let i = 0; i <= 10; i++) {
