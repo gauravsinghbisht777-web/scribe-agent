@@ -1305,25 +1305,6 @@ export default function WhiteboardTutorPage() {
     let targetX = Math.max(minX > 0 && minX < canvas.width ? minX : 100, 80);
     let targetY = maxY + 55;
 
-    // If a worksheet photo is on the page, prefer the open space beside it.
-    // AI-written steps should sit alongside the question instead of far below it.
-    const latestPhoto = photos[photos.length - 1];
-    if (latestPhoto) {
-      const sideWidth = Math.min(420, Math.max(300, canvas.width * 0.24));
-      const rightX = latestPhoto.x + latestPhoto.width + 28;
-      const leftX = latestPhoto.x - sideWidth - 28;
-      const overlapsPhoto = (x: number) => photos.some((p) =>
-        x < p.x + p.width + 20 && x + sideWidth > p.x - 20 &&
-        latestPhoto.y < p.y + p.height && latestPhoto.y + 240 > p.y
-      );
-      if (rightX + sideWidth < canvas.width - 24 && !overlapsPhoto(rightX)) {
-        return { x: rightX, y: latestPhoto.y };
-      }
-      if (leftX > 24 && !overlapsPhoto(leftX)) {
-        return { x: leftX, y: latestPhoto.y };
-      }
-    }
-
     // Photos: push the writing target below any photo overlapping that column
     photos.forEach((p) => {
       const overlapsColumn = targetX + 320 > p.x && targetX < p.x + p.width + 40;
@@ -1334,10 +1315,8 @@ export default function WhiteboardTutorPage() {
     });
 
     if (targetY > canvas.height - 250) {
-      return {
-        x: Math.min(maxX + 60, canvas.width - 320),
-        y: targetY < canvas.height - 250 ? targetY : 180,
-      };
+      resizeCanvas(canvas.width, targetY + 500);
+      targetX = Math.min(Math.max(targetX, 80), canvas.width - 360);
     }
 
     return { x: targetX, y: targetY };
